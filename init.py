@@ -1,15 +1,15 @@
-from pygame_functions import makeSprite,moveSprite, showSprite, setBackgroundImage
+from pygame_functions import makeSprite, moveSprite, showSprite, setBackgroundImage
+
 
 class sideBar:
-
     def __init__(self):
-        
+
         setBackgroundImage("textures/background.png")
-        
+
         self.toolBarBack = makeSprite("textures/toolBar.png")
-        moveSprite(self.toolBarBack , 1136.9, 0)
+        moveSprite(self.toolBarBack, 1136.9, 0)
         showSprite(self.toolBarBack)
-        
+
         self.optionRed = makeSprite("textures/optionRed.png")
         moveSprite(self.optionRed, 1136.9, 0.51)
         showSprite(self.optionRed)
@@ -49,9 +49,18 @@ class sideBar:
         self.optionSquare = makeSprite("textures/optionSquare.png")
         moveSprite(self.optionSquare, 1178, 620)
         showSprite(self.optionSquare)
-        self.toolBarArray = [self.toolBarBack,self.optionRed,self.optionOrange,self.optionYellow,self.optionGreen,self.optionBlue,self.optionDarkBlue,self.optionPurple,self.optionPink]
-                    
+        self.toolBarArray = [
+            self.toolBarBack,
+            self.optionRed,
+            self.optionOrange,
+            self.optionYellow,
+            self.optionGreen,
+            self.optionBlue,
+            self.optionDarkBlue,
+            self.optionPurple,
+            self.optionPink,
+        ]
+
 
 def initializeTextures():
     return sideBar()
-
