@@ -3,7 +3,6 @@ from pygame_functions import *
 
 
 class drawInit:
-
     def __init__(self):
         self.brushSize = 15
         self.brushX = mouseX()
@@ -25,7 +24,7 @@ class drawInit:
         self.darkBlueFlag = False
         self.purpleFlag = False
         self.pinkFlag = False
-        self.color = (0,0,0)
+        self.color = (0, 0, 0)
 
     def state(self):
         if self.brushX > 1135:
@@ -114,7 +113,9 @@ class drawInit:
                         self.color == self.pink
 
                 self.color = self.color
-            self.draw = drawRect(self.brushX, self.brushY, self.brushSize, self.brushSize, self.color)
+            self.draw = drawRect(
+                self.brushX, self.brushY, self.brushSize, self.brushSize, self.color
+            )
 
 
 def test():
