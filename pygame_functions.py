@@ -17,48 +17,55 @@ hiddenSprites = pygame.sprite.OrderedUpdates()
 screenRefresh = True
 background = None
 
-keydict = {"space": pygame.K_SPACE, "esc": pygame.K_ESCAPE, "up": pygame.K_UP, "down": pygame.K_DOWN,
-           "left": pygame.K_LEFT, "right": pygame.K_RIGHT, "return": pygame.K_RETURN,
-           "a": pygame.K_a,
-           "b": pygame.K_b,
-           "c": pygame.K_c,
-           "d": pygame.K_d,
-           "e": pygame.K_e,
-           "f": pygame.K_f,
-           "g": pygame.K_g,
-           "h": pygame.K_h,
-           "i": pygame.K_i,
-           "j": pygame.K_j,
-           "k": pygame.K_k,
-           "l": pygame.K_l,
-           "m": pygame.K_m,
-           "n": pygame.K_n,
-           "o": pygame.K_o,
-           "p": pygame.K_p,
-           "q": pygame.K_q,
-           "r": pygame.K_r,
-           "s": pygame.K_s,
-           "t": pygame.K_t,
-           "u": pygame.K_u,
-           "v": pygame.K_v,
-           "w": pygame.K_w,
-           "x": pygame.K_x,
-           "y": pygame.K_y,
-           "z": pygame.K_z,
-           "1": pygame.K_1,
-           "2": pygame.K_2,
-           "3": pygame.K_3,
-           "4": pygame.K_4,
-           "5": pygame.K_5,
-           "6": pygame.K_6,
-           "7": pygame.K_7,
-           "8": pygame.K_8,
-           "9": pygame.K_9,
-           "0": pygame.K_0}
+keydict = {
+    "space": pygame.K_SPACE,
+    "esc": pygame.K_ESCAPE,
+    "up": pygame.K_UP,
+    "down": pygame.K_DOWN,
+    "left": pygame.K_LEFT,
+    "right": pygame.K_RIGHT,
+    "return": pygame.K_RETURN,
+    "a": pygame.K_a,
+    "b": pygame.K_b,
+    "c": pygame.K_c,
+    "d": pygame.K_d,
+    "e": pygame.K_e,
+    "f": pygame.K_f,
+    "g": pygame.K_g,
+    "h": pygame.K_h,
+    "i": pygame.K_i,
+    "j": pygame.K_j,
+    "k": pygame.K_k,
+    "l": pygame.K_l,
+    "m": pygame.K_m,
+    "n": pygame.K_n,
+    "o": pygame.K_o,
+    "p": pygame.K_p,
+    "q": pygame.K_q,
+    "r": pygame.K_r,
+    "s": pygame.K_s,
+    "t": pygame.K_t,
+    "u": pygame.K_u,
+    "v": pygame.K_v,
+    "w": pygame.K_w,
+    "x": pygame.K_x,
+    "y": pygame.K_y,
+    "z": pygame.K_z,
+    "1": pygame.K_1,
+    "2": pygame.K_2,
+    "3": pygame.K_3,
+    "4": pygame.K_4,
+    "5": pygame.K_5,
+    "6": pygame.K_6,
+    "7": pygame.K_7,
+    "8": pygame.K_8,
+    "9": pygame.K_9,
+    "0": pygame.K_0,
+}
 screen = ""
 
 
-class Background():
+class Background:
     def __init__(self):
         self.colour = pygame.Color("black")
 
@@ -80,16 +87,22 @@ class Background():
         self.stagePosX -= x
         self.stagePosY -= y
         col = (self.stagePosX % (self.tileWidth * len(self.tiles[0]))) // self.tileWidth
-        xOff = (0 - self.stagePosX % self.tileWidth)
+        xOff = 0 - self.stagePosX % self.tileWidth
         row = (self.stagePosY % (self.tileHeight * len(self.tiles))) // self.tileHeight
-        yOff = (0 - self.stagePosY % self.tileHeight)
+        yOff = 0 - self.stagePosY % self.tileHeight
 
-        col2 = ((self.stagePosX + self.tileWidth) % (self.tileWidth * len(self.tiles[0]))) // self.tileWidth
-        row2 = ((self.stagePosY + self.tileHeight) % (self.tileHeight * len(self.tiles))) // self.tileHeight
+        col2 = (
+            (self.stagePosX + self.tileWidth) % (self.tileWidth * len(self.tiles[0]))
+        ) // self.tileWidth
+        row2 = (
+            (self.stagePosY + self.tileHeight) % (self.tileHeight * len(self.tiles))
+        ) // self.tileHeight
         screen.blit(self.tiles[row][col], [xOff, yOff])
         screen.blit(self.tiles[row][col2], [xOff + self.tileWidth, yOff])
         screen.blit(self.tiles[row2][col], [xOff, yOff + self.tileHeight])
-        screen.blit(self.tiles[row2][col2], [xOff + self.tileWidth, yOff + self.tileHeight])
+        screen.blit(
+            self.tiles[row2][col2], [xOff + self.tileWidth, yOff + self.tileHeight]
+        )
 
         self.surface = screen.copy()
 
@@ -107,10 +120,14 @@ class newSprite(pygame.sprite.Sprite):
         img = loadImage(filename)
         self.originalWidth = img.get_width() // frames
         self.originalHeight = img.get_height()
-        frameSurf = pygame.Surface((self.originalWidth, self.originalHeight), pygame.SRCALPHA, 32)
+        frameSurf = pygame.Surface(
+            (self.originalWidth, self.originalHeight), pygame.SRCALPHA, 32
+        )
         x = 0
         for frameNo in range(frames):
-            frameSurf = pygame.Surface((self.originalWidth, self.originalHeight), pygame.SRCALPHA, 32)
+            frameSurf = pygame.Surface(
+                (self.originalWidth, self.originalHeight), pygame.SRCALPHA, 32
+            )
             frameSurf.blit(img, (x, 0))
             self.images.append(frameSurf.copy())
             x -= self.originalWidth
@@ -137,7 +154,9 @@ class newSprite(pygame.sprite.Sprite):
         if self.angle == 0 and self.scale == 1:
             self.image = self.images[index]
         else:
-            self.image = pygame.transform.rotozoom(self.images[self.currentImage], -self.angle, self.scale)
+            self.image = pygame.transform.rotozoom(
+                self.images[self.currentImage], -self.angle, self.scale
+            )
         oldcenter = self.rect.center
         self.rect = self.image.get_rect()
         originalRect = self.images[self.currentImage].get_rect()
@@ -173,8 +192,11 @@ class newTextBox(pygame.sprite.Sprite):
     def update(self, keyevent):
         key = keyevent.key
         unicode = keyevent.unicode
-        if key > 31 and key < 127 and (
-                self.maxLength == 0 or len(self.text) < self.maxLength):  # only printable characters
+        if (
+            key > 31
+            and key < 127
+            and (self.maxLength == 0 or len(self.text) < self.maxLength)
+        ):  # only printable characters
             if keyevent.mod in (1, 2) and self.case == 1 and key >= 97 and key <= 122:
                 # force lowercase letters
                 self.text += chr(key)
@@ -194,9 +216,14 @@ class newTextBox(pygame.sprite.Sprite):
                 if keys[pygame.K_BACKSPACE]:
                     thistime = pygame.time.get_ticks()
                     if thistime > nexttime:
-                        self.text = self.text[0:len(self.text) - 1]
+                        self.text = self.text[0 : len(self.text) - 1]
                         self.image.fill((255, 255, 255))
-                        pygame.draw.rect(self.image, (0, 0, 0), [0, 0, self.width - 1, self.boxSize - 1], 2)
+                        pygame.draw.rect(
+                            self.image,
+                            (0, 0, 0),
+                            [0, 0, self.width - 1, self.boxSize - 1],
+                            2,
+                        )
                         newSurface = self.font.render(self.text, True, self.fontColour)
                         self.image.blit(newSurface, [10, 5])
                         updateDisplay()
@@ -206,7 +233,9 @@ class newTextBox(pygame.sprite.Sprite):
                     deleting = False
 
         self.image.fill((255, 255, 255))
-        pygame.draw.rect(self.image, (0, 0, 0), [0, 0, self.width - 1, self.boxSize - 1], 2)
+        pygame.draw.rect(
+            self.image, (0, 0, 0), [0, 0, self.width - 1, self.boxSize - 1], 2
+        )
         newSurface = self.font.render(self.text, True, self.fontColour)
         self.image.blit(newSurface, [10, 5])
         if screenRefresh:
@@ -220,7 +249,9 @@ class newTextBox(pygame.sprite.Sprite):
 
     def clear(self):
         self.image.fill((255, 255, 255))
-        pygame.draw.rect(self.image, (0, 0, 0), [0, 0, self.width - 1, self.boxSize - 1], 2)
+        pygame.draw.rect(
+            self.image, (0, 0, 0), [0, 0, self.width - 1, self.boxSize - 1], 2
+        )
         newSurface = self.font.render(self.initialText, True, self.initialColour)
         self.image.blit(newSurface, [10, 5])
         if screenRefresh:
@@ -264,7 +295,9 @@ class newLabel(pygame.sprite.Sprite):
                 maxWidth = thisRect.width
             if thisRect.height > maxHeight:
                 maxHeight = thisRect.height
-        self.image = pygame.Surface((maxWidth, (self.fontSize + 1) * len(textLines) + 5), pygame.SRCALPHA, 32)
+        self.image = pygame.Surface(
+            (maxWidth, (self.fontSize + 1) * len(textLines) + 5), pygame.SRCALPHA, 32
+        )
         self.image.convert_alpha()
         if self.background != "clear":
             self.image.fill(parseColour(self.background))
@@ -282,19 +315,24 @@ def loadImage(fileName, useColorKey=False):
         # Return the image
         return image
     else:
-        raise Exception("Error loading image: " + fileName + " - Check filename and path?")
+        raise Exception(
+            "Error loading image: " + fileName + " - Check filename and path?"
+        )
 
 
 def screenSize(sizex, sizey, xpos=None, ypos=None, fullscreen=False):
     global screen
     global background
     if xpos != None and ypos != None:
-        os.environ['SDL_VIDEO_WINDOW_POS'] = "%d, %d" % (xpos, ypos + 50)
+        os.environ["SDL_VIDEO_WINDOW_POS"] = "%d, %d" % (xpos, ypos + 50)
     else:
         windowInfo = pygame.display.Info()
         monitorWidth = windowInfo.current_w
         monitorHeight = windowInfo.current_h
-        os.environ['SDL_VIDEO_WINDOW_POS'] = "%d, %d" % ((monitorWidth - sizex) / 2, (monitorHeight - sizey) / 2)
+        os.environ["SDL_VIDEO_WINDOW_POS"] = "%d, %d" % (
+            (monitorWidth - sizex) / 2,
+            (monitorHeight - sizey) / 2,
+        )
     if fullscreen:
         screen = pygame.display.set_mode([sizex, sizey], pygame.FULLSCREEN)
     else:
@@ -321,7 +359,9 @@ def rotateSprite(sprite, angle):
 def transformSprite(sprite, angle, scale, hflip=False, vflip=False):
     oldmiddle = sprite.rect.center
     if hflip or vflip:
-        tempImage = pygame.transform.flip(sprite.images[sprite.currentImage], hflip, vflip)
+        tempImage = pygame.transform.flip(
+            sprite.images[sprite.currentImage], hflip, vflip
+        )
     else:
         tempImage = sprite.images[sprite.currentImage]
     if angle != 0 or scale != 1:
@@ -420,7 +460,9 @@ def touching(sprite1, sprite2):
 
 def allTouching(spritename):
     if spriteGroup.has(spritename):
-        collisions = pygame.sprite.spritecollide(spritename, spriteGroup, False, collided=pygame.sprite.collide_mask)
+        collisions = pygame.sprite.spritecollide(
+            spritename, spriteGroup, False, collided=pygame.sprite.collide_mask
+        )
         collisions.remove(spritename)
         return collisions
     else:
@@ -435,7 +477,7 @@ def pause(milliseconds, allowEsc=True):
     while not (current_time > waittime or (keys[pygame.K_ESCAPE] and allowEsc)):
         pygame.event.clear()
         keys = pygame.key.get_pressed()
-        if (keys[pygame.K_ESCAPE] and allowEsc):
+        if keys[pygame.K_ESCAPE] and allowEsc:
             pygame.quit()
             sys.exit()
         current_time = pygame.time.get_ticks()
@@ -477,7 +519,9 @@ def drawEllipse(centreX, centreY, width, height, colour, linewidth=0):
 def drawTriangle(x1, y1, x2, y2, x3, y3, colour, linewidth=0):
     global bgSurface
     colour = parseColour(colour)
-    thisrect = pygame.draw.polygon(screen, colour, [(x1, y1), (x2, y2), (x3, y3)], linewidth)
+    thisrect = pygame.draw.polygon(
+        screen, colour, [(x1, y1), (x2, y2), (x3, y3)], linewidth
+    )
     if screenRefresh:
         pygame.display.update(thisrect)
 
@@ -571,7 +615,9 @@ def keyPressed(keyCheck=""):
     return False
 
 
-def makeLabel(text, fontSize, xpos, ypos, fontColour='black', font='Arial', background="clear"):
+def makeLabel(
+    text, fontSize, xpos, ypos, fontColour="black", font="Arial", background="clear"
+):
     # make a text sprite
     thisText = newLabel(text, fontSize, font, fontColour, xpos, ypos, background)
     return thisText
@@ -597,7 +643,9 @@ def waitPress():
     return thisevent.key
 
 
-def makeTextBox(xpos, ypos, width, case=0, startingText="Please type here", maxLength=0, fontSize=22):
+def makeTextBox(
+    xpos, ypos, width, case=0, startingText="Please type here", maxLength=0, fontSize=22
+):
     thisTextBox = newTextBox(startingText, xpos, ypos, width, case, maxLength, fontSize)
     textboxGroup.add(thisTextBox)
     return thisTextBox
@@ -638,7 +686,7 @@ def clock():
 def tick(fps):
     pygame.event.clear()
     keys = pygame.key.get_pressed()
-    if (keys[pygame.K_ESCAPE]):
+    if keys[pygame.K_ESCAPE]:
         pygame.quit()
         sys.exit()
     gameClock.tick(fps)
@@ -675,7 +723,7 @@ def updateDisplay():
     textboxRects = textboxGroup.draw(screen)
     pygame.display.update()
     keys = pygame.key.get_pressed()
-    if (keys[pygame.K_ESCAPE]):
+    if keys[pygame.K_ESCAPE]:
         pygame.quit()
         sys.exit()
     spriteGroup.clear(screen, background.surface)
@@ -735,5 +783,7 @@ def setAutoUpdate(val):
 
 
 if __name__ == "__main__":
-    print(""""pygame_functions is not designed to be run directly.
-    See the wiki at https://github.com/StevePaget/Pygame_Functions/wiki/Getting-Started for more information""")
+    print(
+        """"pygame_functions is not designed to be run directly.
+    See the wiki at https://github.com/StevePaget/Pygame_Functions/wiki/Getting-Started for more information"""
+    )
